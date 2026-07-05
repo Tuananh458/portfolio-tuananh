@@ -53,14 +53,18 @@ export const cvData = {
       link: "https://quizify.edu.vn",
       bullets: {
         en: [
-          "Designed AI pipelines for processing PDF, DOCX, images, and handwritten documents.",
-          "Built automated question classification by subject, chapter, lesson, and difficulty level.",
-          "Developed exam generation and question bank management; integrated OpenAI and Gemini models."
+          "Designed a layout-aware OCR digitization pipeline using OpenCV, Gemini Vision, and Pixtral-12b to convert textbooks and handwritten materials into Markdown + LaTeX.",
+          "Built a hybrid RAG retrieval system (pgvector + BM25Okapi) with Cohere reranking to search curriculum lessons with high semantic precision.",
+          "Orchestrated a multi-agent Solver-Verifier-Refiner pipeline using LangGraph to generate, validate, and format math questions.",
+          "Integrated automated TikZ-to-PNG vector diagram compilation using tectonic.exe to generate geometry illustrations.",
+          "Developed multiple-scrambled version (.docx) and answer sheet (.xlsx) export workflows."
         ],
         vi: [
-          "Thiết kế pipeline AI xử lý PDF, DOCX, hình ảnh và tài liệu viết tay.",
-          "Xây dựng hệ thống phân loại câu hỏi tự động theo môn học, chương, bài và độ khó.",
-          "Phát triển tính năng tạo đề thi và quản lý ngân hàng câu hỏi; tích hợp mô hình OpenAI và Gemini."
+          "Thiết kế pipeline số hóa tài liệu sử dụng OpenCV, Gemini Vision và Pixtral-12b để chuyển đổi sách giáo khoa và tài liệu viết tay sang Markdown + LaTeX.",
+          "Xây dựng hệ thống tìm kiếm lai ghép Hybrid RAG (pgvector + BM25Okapi) tích hợp Cohere rerank để truy xuất bài học có độ chuẩn xác cao.",
+          "Thiết lập luồng xử lý đa tác nhân (Solver-Verifier-Refiner) bằng LangGraph để tự động sinh, kiểm định và tối ưu đề thi.",
+          "Tích hợp tính năng sinh mã TikZ và biên dịch tự động sang ảnh minh họa hình học/đồ thị bằng tectonic.exe.",
+          "Phát triển tính năng trộn đề thi, xuất file Word (.docx) đa mã đề và file Excel (.xlsx) đáp án."
         ]
       }
     },
