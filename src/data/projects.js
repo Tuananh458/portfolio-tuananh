@@ -36,7 +36,7 @@ export const projects = [
     },
     tags: ['Python', 'FastAPI', 'PostgreSQL', 'OpenAI API', 'Gemini API', 'OCR', 'RAG', 'ReactJS', 'NextJS'],
     link: 'https://quizify.edu.vn',
-    embedUrl: 'https://quizify.edu.vn'
+    embedUrl: 'http://localhost:5174'
   },
   {
     id: 'educonnect',

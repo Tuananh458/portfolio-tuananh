@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 import { useLanguage } from './context/LanguageContext';
 import { useTheme } from './context/ThemeContext';
 import Navbar from './components/Navbar';
@@ -9,6 +10,7 @@ import CVModal from './components/CVModal';
 import { projects } from './data/projects';
 import { activities } from './data/activities';
 import { cvData } from './data/cvData';
+import { skillsData } from './data/skills';
 import { 
   Mail, 
   Phone, 
@@ -40,10 +42,28 @@ const SectionHeader = ({ label, title }) => {
   );
 };
 
+const iconsMap = {
+  Sparkles: Sparkles,
+  Cpu: Cpu,
+  Layers: Layers,
+  Database: Database,
+  Compass: Compass
+};
+
+const skillCategories = [
+  { id: 'all', label: { en: 'All', vi: 'Tất cả' } },
+  { id: 'ai', label: { en: 'AI / ML', vi: 'AI / ML' } },
+  { id: 'backend', label: { en: 'Backend', vi: 'Backend' } },
+  { id: 'frontend', label: { en: 'Frontend', vi: 'Frontend' } },
+  { id: 'database', label: { en: 'Databases', vi: 'Cơ sở dữ liệu' } },
+  { id: 'tools', label: { en: 'Tools & Cloud', vi: 'Công cụ & Cloud' } }
+];
+
 const App = () => {
   const { lang, t } = useLanguage();
   const { theme } = useTheme();
   const [cvOpen, setCvOpen] = useState(false);
+  const [activeSkillCategory, setActiveSkillCategory] = useState('all');
 
   // Scroll reveal observer
   useEffect(() => {
@@ -240,93 +260,69 @@ const App = () => {
       </section>
 
       {/* ================= SKILLS SECTION ================= */}
-      <section id="skills" className="py-24 bg-soft/50 dark:bg-soft/10 border-y border-line">
+      <section id="skills" className="py-24 bg-soft/50 dark:bg-soft/10 border-y border-line overflow-hidden">
         <div className="wrap reveal">
           <SectionHeader label={t('skills_label')} title={t('skills_title')} />
           
-          <div className="skills-grid grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-            {/* 1. AI */}
-            <div className="skill-card glass-panel rounded-3xl p-8 relative overflow-hidden group">
-              <span className="absolute top-0 left-0 right-0 h-[3px] bg-gradient-to-r from-indigo-500 to-purple-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-              <div className="skill-head flex items-center gap-4.5 mb-5">
-                <div className="skill-ico w-10 h-10 rounded-xl bg-accent-soft text-accent flex items-center justify-center">
-                  <Sparkles size={18} />
-                </div>
-                <h3 className="font-display font-extrabold text-lg text-ink">AI Engineering</h3>
-              </div>
-              <div className="tags flex flex-wrap gap-2">
-                <span className="tag">LLMs</span>
-                <span class="tag">Prompt Engineering</span>
-                <span className="tag">RAG</span>
-                <span className="tag">OCR</span>
-                <span className="tag">AI Workflow</span>
-                <span className="tag">AI Agents</span>
-              </div>
-            </div>
-
-            {/* 2. Backend */}
-            <div className="skill-card glass-panel rounded-3xl p-8 relative overflow-hidden group">
-              <span className="absolute top-0 left-0 right-0 h-[3px] bg-gradient-to-r from-indigo-500 to-purple-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-              <div className="skill-head flex items-center gap-4.5 mb-5">
-                <div className="skill-ico w-10 h-10 rounded-xl bg-accent-soft text-accent flex items-center justify-center">
-                  <Cpu size={18} />
-                </div>
-                <h3 className="font-display font-extrabold text-lg text-ink">Backend Development</h3>
-              </div>
-              <div className="tags flex flex-wrap gap-2">
-                <span className="tag">Python</span>
-                <span className="tag">FastAPI</span>
-                <span className="tag">ASP.NET Core</span>
-              </div>
-            </div>
-
-            {/* 3. Frontend */}
-            <div className="skill-card glass-panel rounded-3xl p-8 relative overflow-hidden group">
-              <span className="absolute top-0 left-0 right-0 h-[3px] bg-gradient-to-r from-indigo-500 to-purple-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-              <div className="skill-head flex items-center gap-4.5 mb-5">
-                <div className="skill-ico w-10 h-10 rounded-xl bg-accent-soft text-accent flex items-center justify-center">
-                  <Layers size={18} />
-                </div>
-                <h3 className="font-display font-extrabold text-lg text-ink">Frontend</h3>
-              </div>
-              <div className="tags flex flex-wrap gap-2">
-                <span className="tag">ReactJS</span>
-                <span className="tag">NextJS</span>
-              </div>
-            </div>
-
-            {/* 4. Databases */}
-            <div className="skill-card glass-panel rounded-3xl p-8 relative overflow-hidden group">
-              <span className="absolute top-0 left-0 right-0 h-[3px] bg-gradient-to-r from-indigo-500 to-purple-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-              <div className="skill-head flex items-center gap-4.5 mb-5">
-                <div className="skill-ico w-10 h-10 rounded-xl bg-accent-soft text-accent flex items-center justify-center">
-                  <Database size={18} />
-                </div>
-                <h3 className="font-display font-extrabold text-lg text-ink">Databases</h3>
-              </div>
-              <div className="tags flex flex-wrap gap-2">
-                <span className="tag">PostgreSQL</span>
-                <span className="tag">SQL Server</span>
-                <span className="tag">Supabase</span>
-              </div>
-            </div>
-
-            {/* 5. Tools */}
-            <div className="skill-card glass-panel rounded-3xl p-8 relative overflow-hidden group">
-              <span className="absolute top-0 left-0 right-0 h-[3px] bg-gradient-to-r from-indigo-500 to-purple-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-              <div className="skill-head flex items-center gap-4.5 mb-5">
-                <div className="skill-ico w-10 h-10 rounded-xl bg-accent-soft text-accent flex items-center justify-center">
-                  <Compass size={18} />
-                </div>
-                <h3 className="font-display font-extrabold text-lg text-ink" data-i18n="skills_tools">Tools & Cloud</h3>
-              </div>
-              <div className="tags flex flex-wrap gap-2">
-                <span className="tag">Git</span>
-                <span className="tag">Railway</span>
-                <span className="tag">Google Cloud</span>
-              </div>
-            </div>
+          {/* Skill Category Filters */}
+          <div className="flex flex-wrap gap-2.5 mb-10 justify-center sm:justify-start">
+            {skillCategories.map((cat) => (
+              <button
+                key={cat.id}
+                onClick={() => setActiveSkillCategory(cat.id)}
+                className={`px-4.5 py-2 rounded-full font-sans text-xs font-bold transition-all duration-300 border ${
+                  activeSkillCategory === cat.id
+                    ? 'bg-accent text-white border-accent shadow-md shadow-accent/20 scale-105'
+                    : 'bg-surface text-ink-2 border-line hover:border-line-2 hover:text-ink'
+                }`}
+              >
+                {cat.label[lang]}
+              </button>
+            ))}
           </div>
+
+          <motion.div 
+            layout
+            className="skills-grid grid gap-6 md:grid-cols-2 lg:grid-cols-3"
+          >
+            <AnimatePresence mode="popLayout">
+              {skillsData
+                .filter(group => activeSkillCategory === 'all' || group.category === activeSkillCategory)
+                .map(group => {
+                  const Icon = iconsMap[group.icon] || Sparkles;
+                  return (
+                    <motion.div
+                      layout
+                      initial={{ opacity: 0, scale: 0.9 }}
+                      animate={{ opacity: 1, scale: 1 }}
+                      exit={{ opacity: 0, scale: 0.9 }}
+                      transition={{ duration: 0.3 }}
+                      key={group.id}
+                      className="skill-card glass-panel rounded-3xl p-8 relative overflow-hidden group"
+                    >
+                      <span className="absolute top-0 left-0 right-0 h-[3px] bg-gradient-to-r from-indigo-500 to-purple-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                      <div className="skill-head flex items-center gap-4 mb-5">
+                        <div className="skill-ico w-10 h-10 rounded-xl bg-accent-soft text-accent flex items-center justify-center">
+                          <Icon size={18} />
+                        </div>
+                        <h3 className="font-display font-extrabold text-lg text-ink">{group.name[lang]}</h3>
+                      </div>
+                      
+                      <div className="space-y-3.5">
+                        {group.items.map((item, idx) => (
+                          <div key={idx} className="flex justify-between items-center">
+                            <span className="text-sm font-semibold text-ink-2">{item.name}</span>
+                            <span className="font-mono text-[10px] font-bold text-accent bg-accent-soft px-2.5 py-0.5 rounded border border-accent/10">
+                              {item.level[lang]}
+                            </span>
+                          </div>
+                        ))}
+                      </div>
+                    </motion.div>
+                  );
+                })}
+            </AnimatePresence>
+          </motion.div>
         </div>
       </section>
 
