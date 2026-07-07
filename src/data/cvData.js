@@ -1,5 +1,8 @@
 export const cvData = {
-  name: "HOANG KIM TUAN ANH",
+  name: {
+    en: "HOANG KIM TUAN ANH",
+    vi: "HOÀNG KIM TUẤN ANH"
+  },
   role: {
     en: "AI Engineer",
     vi: "Kỹ sư AI"

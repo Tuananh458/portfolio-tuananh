@@ -57,7 +57,7 @@ const CVModal = ({ isOpen, onClose }) => {
         <div className="flex justify-between gap-6 flex-wrap border-b-2 border-slate-900 pb-5 mb-6">
           <div>
             <h2 className="font-display font-extrabold text-3xl md:text-4xl tracking-tight leading-none text-slate-900">
-              {cvData.name}
+              {cvData.name[lang] || cvData.name.en}
             </h2>
             <div className="font-mono text-xs font-bold text-indigo-600 tracking-wider uppercase mt-2">
               {role}

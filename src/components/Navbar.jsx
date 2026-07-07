@@ -43,8 +43,16 @@ const Navbar = ({ onOpenCV }) => {
             <span className="w-8 h-8 rounded-full bg-gradient-to-br from-indigo-500 via-purple-500 to-pink-500 text-white flex items-center justify-center text-xs font-black shadow-md">
               TA
             </span>
-            <span>
-              tuananh<span className="text-accent">.dev</span>
+            <span className="whitespace-nowrap">
+              {lang === 'vi' ? (
+                <>
+                  Hoàng Kim <span className="text-accent">Tuấn Anh</span>
+                </>
+              ) : (
+                <>
+                  Hoang Kim <span className="text-accent">Tuan Anh</span>
+                </>
+              )}
             </span>
           </a>
 

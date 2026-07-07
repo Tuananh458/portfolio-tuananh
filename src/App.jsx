@@ -114,7 +114,7 @@ const App = () => {
                 <span>{t('hero_badge')}</span>
               </div>
               <h1 className="font-display font-extrabold text-slate-900 dark:text-white text-4xl sm:text-5xl md:text-6xl tracking-tight leading-[1.08] mb-6">
-                Hoang Kim Tuan Anh<br />
+                {lang === 'vi' ? 'Hoàng Kim Tuấn Anh' : 'Hoang Kim Tuan Anh'}<br />
                 <span className="text-gradient font-black block mt-2 py-1 leading-normal">
                   {role}.
                 </span>
