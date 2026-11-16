@@ -51,7 +51,7 @@ export const HeroPortrait = () => {
         initial={{ opacity: 0, x: -20 }}
         animate={{ opacity: 1, x: 0 }}
         transition={{ delay: 0.5, duration: 0.6 }}
-        className="absolute -left-10 bottom-16 glass-panel bg-surface-solid/90 rounded-2xl px-4 py-3 flex items-center gap-3 shadow-lg-custom animate-float"
+        className="absolute -left-10 bottom-6 glass-panel bg-surface-solid/90 rounded-2xl px-4 py-3 flex items-center gap-3 shadow-lg-custom animate-float"
       >
         <span className="w-9 h-9 rounded-xl bg-gradient-to-br from-indigo-500 to-purple-500 text-white flex items-center justify-center">
           <Briefcase size={16} />
@@ -66,14 +66,14 @@ export const HeroPortrait = () => {
         initial={{ opacity: 0, x: 20 }}
         animate={{ opacity: 1, x: 0 }}
         transition={{ delay: 0.7, duration: 0.6 }}
-        className="absolute -right-8 top-10 glass-panel bg-surface-solid/90 rounded-2xl px-4 py-3 flex items-center gap-3 shadow-lg-custom animate-float-delayed"
+        className="absolute -right-8 top-[58%] glass-panel bg-surface-solid/90 rounded-2xl px-4 py-3 flex items-center gap-3 shadow-lg-custom animate-float-delayed"
       >
         <span className="w-9 h-9 rounded-xl bg-gradient-to-br from-rose-500 to-amber-400 text-white flex items-center justify-center">
           <Rocket size={16} />
         </span>
         <div className="leading-tight">
           <div className="text-[13px] font-extrabold text-ink">{t('portrait_chip')}</div>
-          <div className="text-[11px] font-semibold text-ink-3">Quizify · HKChinese</div>
+          <div className="text-[11px] font-semibold text-ink-2">Quizify · HKChinese</div>
         </div>
       </motion.div>
     </div>
