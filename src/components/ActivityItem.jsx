@@ -1,13 +1,15 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { useLanguage } from '../context/LanguageContext';
-import { Brain, Rocket, Cpu, GraduationCap } from 'lucide-react';
+import { Brain, Rocket, Cpu, GraduationCap, Briefcase, Languages } from 'lucide-react';
 
 const iconsMap = {
   Brain: Brain,
   Rocket: Rocket,
   Cpu: Cpu,
-  GraduationCap: GraduationCap
+  GraduationCap: GraduationCap,
+  Briefcase: Briefcase,
+  Languages: Languages
 };
 
 const ActivityItem = ({ activity }) => {

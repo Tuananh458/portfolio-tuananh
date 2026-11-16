@@ -26,6 +26,26 @@ export default {
         sans: ['Inter', 'sans-serif'],
         mono: ['"JetBrains Mono"', 'monospace'],
       },
+      keyframes: {
+        marquee: {
+          '0%': { transform: 'translateX(0)' },
+          '100%': { transform: 'translateX(-50%)' },
+        },
+        float: {
+          '0%, 100%': { transform: 'translateY(0)' },
+          '50%': { transform: 'translateY(-8px)' },
+        },
+        blink: {
+          '0%, 49%': { opacity: '1' },
+          '50%, 100%': { opacity: '0' },
+        },
+      },
+      animation: {
+        marquee: 'marquee 40s linear infinite',
+        blink: 'blink 1s step-end infinite',
+        float: 'float 5s ease-in-out infinite',
+        'float-delayed': 'float 5s ease-in-out 1.5s infinite',
+      },
       boxShadow: {
         'sm-custom': 'var(--shadow-sm)',
         'md-custom': 'var(--shadow-md)',

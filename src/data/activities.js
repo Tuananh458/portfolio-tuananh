@@ -1,5 +1,39 @@
 export const activities = [
   {
+    id: 'vsf',
+    date: {
+      en: '2026',
+      vi: '2026'
+    },
+    title: {
+      en: 'Joined VinSmart Future as AI Engineer',
+      vi: 'Gia nhập VinSmart Future với vai trò Kỹ sư AI'
+    },
+    desc: {
+      en: 'Started building production LLM applications and AI agents at VinSmart Future in Gia Lam, Ha Noi.',
+      vi: 'Bắt đầu xây dựng ứng dụng LLM và AI Agent cho môi trường production tại VinSmart Future, Gia Lâm, Hà Nội.'
+    },
+    category: 'Career',
+    icon: 'Briefcase'
+  },
+  {
+    id: 'hkchinese',
+    date: {
+      en: '2026',
+      vi: '2026'
+    },
+    title: {
+      en: 'Launched HKChinese',
+      vi: 'Ra mắt HKChinese'
+    },
+    desc: {
+      en: 'Released hkchinese.com, a Chinese learning and HSK prep platform with an AI tutor, a real-time AI speaking partner and automatic pronunciation scoring.',
+      vi: 'Ra mắt hkchinese.com, nền tảng học tiếng Trung và luyện thi HSK với trợ giảng AI, bạn luyện nói AI thời gian thực và chấm phát âm tự động.'
+    },
+    category: 'Product Launch',
+    icon: 'Languages'
+  },
+  {
     id: 1,
     date: {
       en: 'May 2026',

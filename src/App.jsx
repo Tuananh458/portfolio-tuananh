@@ -7,6 +7,9 @@ import ParticleBg from './components/ParticleBg';
 import ProjectCard from './components/ProjectCard';
 import ActivityItem from './components/ActivityItem';
 import CVModal from './components/CVModal';
+import LiveShowcase from './components/LiveShowcase';
+import { RotatingRole, TerminalCard, TechMarquee } from './components/HeroExtras';
+import { HeroPortrait } from './components/Avatar';
 import { projects } from './data/projects';
 import { activities } from './data/activities';
 import { cvData } from './data/cvData';
@@ -25,7 +28,11 @@ import {
   Layers,
   Sparkles,
   Blocks,
-  Compass
+  Compass,
+  Briefcase,
+  MapPin,
+  Globe,
+  ArrowUpRight
 } from 'lucide-react';
 
 const SectionHeader = ({ label, title }) => {
@@ -87,7 +94,22 @@ const App = () => {
     };
   }, []);
 
-  const role = cvData.role[lang] || cvData.role.en;
+  const pick = (v) => (v && typeof v === 'object' && !Array.isArray(v) ? v[lang] || v.en : v);
+  const timeline = [
+    ...cvData.experience.map((e) => ({
+      title: pick(e.title),
+      org: pick(e.company),
+      date: pick(e.date),
+      bullets: pick(e.bullets),
+      current: e.current
+    })),
+    ...cvData.education.map((e) => ({
+      title: pick(e.degree),
+      org: pick(e.institution),
+      date: pick(e.date),
+      bullets: e.desc ? [pick(e.desc)] : []
+    }))
+  ];
 
   return (
     <div className="relative min-h-screen selection:bg-indigo-500 selection:text-white transition-colors duration-300">
@@ -114,16 +136,14 @@ const App = () => {
                 <span>{t('hero_badge')}</span>
               </div>
               <h1 className="font-display font-extrabold text-slate-900 dark:text-white text-4xl sm:text-5xl md:text-6xl tracking-tight leading-[1.08] mb-6">
-                {lang === 'vi' ? 'Hoàng Kim Tuấn Anh' : 'Hoang Kim Tuan Anh'}<br />
-                <span className="text-gradient font-black block mt-2 py-1 leading-normal">
-                  {role}.
-                </span>
+                {lang === 'vi' ? 'Hoàng Kim Tuấn Anh' : 'Hoang Kim Tuan Anh'}
+                <RotatingRole />
               </h1>
               <p className="subtitle text-ink-2 text-base md:text-lg mb-8 max-w-[600px] leading-relaxed" 
                  dangerouslySetInnerHTML={{ __html: t('hero_sub') }} 
               />
               <div className="hero-actions flex gap-4 flex-wrap">
-                <a href="#projects" className="btn btn-primary text-white bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 flex items-center gap-2 hover:scale-105 shadow-md shadow-indigo-500/20 duration-200">
+                <a href="#live" className="btn btn-primary text-white bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 flex items-center gap-2 hover:scale-105 shadow-md shadow-indigo-500/20 duration-200">
                   <span>{t('hero_cta1')}</span>
                   <ArrowRight size={15} />
                 </a>
@@ -145,7 +165,7 @@ const App = () => {
                   <div className="stat-label text-[10px] md:text-[11px] font-bold text-ink-3 tracking-widest">{t('stat2')}</div>
                 </div>
                 <div>
-                  <div className="stat-num text-3xl font-extrabold font-display text-gradient">15+</div>
+                  <div className="stat-num text-3xl font-extrabold font-display text-gradient">20+</div>
                   <div className="stat-label text-[10px] md:text-[11px] font-bold text-ink-3 tracking-widest">{t('stat3')}</div>
                 </div>
               </div>
@@ -166,37 +186,15 @@ const App = () => {
               </div>
             </div>
 
-            {/* Right Column neural decoration */}
-            <div className="hidden md:flex justify-center select-none">
-              <svg viewBox="0 0 200 200" fill="none" className="w-full max-w-[280px] opacity-80 filter drop-shadow-[0_0_20px_rgba(99,102,241,0.25)]">
-                <defs>
-                  <linearGradient id="neuralGrad" x1="0" y1="0" x2="200" y2="200" gradientUnits="userSpaceOnUse">
-                    <stop offset="0%" stopColor="#6366f1" />
-                    <stop offset="100%" stopColor="#d946ef" />
-                  </linearGradient>
-                </defs>
-                <circle cx="100" cy="100" r="60" stroke="url(#neuralGrad)" strokeWidth="1" strokeDasharray="6 6" />
-                <circle cx="100" cy="100" r="30" stroke="url(#neuralGrad)" strokeWidth="0.75" />
-                <line x1="100" y1="20" x2="100" y2="180" stroke="var(--line)" strokeWidth="1" />
-                <line x1="20" y1="100" x2="180" y2="100" stroke="var(--line)" strokeWidth="1" />
-                <line x1="43.4" y1="43.4" x2="156.6" y2="156.6" stroke="var(--line)" strokeWidth="0.75" />
-                <line x1="43.4" y1="156.6" x2="156.6" y2="43.4" stroke="var(--line)" strokeWidth="0.75" />
-                
-                <circle cx="100" cy="100" r="16" fill="url(#neuralGrad)" className="animate-pulse" />
-                <circle cx="100" cy="40" r="6" fill="#6366f1" />
-                <circle cx="100" cy="160" r="6" fill="#d946ef" />
-                <circle cx="40" cy="100" r="6" fill="#6366f1" />
-                <circle cx="180" cy="100" r="6" fill="#d946ef" />
-                
-                <circle cx="57.6" cy="57.6" r="4.5" fill="#a855f7" />
-                <circle cx="142.4" cy="142.4" r="4.5" fill="#a855f7" />
-                <circle cx="57.6" cy="142.4" r="4.5" fill="#a855f7" />
-                <circle cx="142.4" cy="57.6" r="4.5" fill="#a855f7" />
-              </svg>
+            {/* Right Column: portrait */}
+            <div className="flex justify-center order-first md:order-none px-10 md:px-0">
+              <HeroPortrait />
             </div>
           </div>
         </div>
       </header>
+
+      <TechMarquee />
 
       {/* ================= ABOUT SECTION ================= */}
       <section id="about" className="py-24">
@@ -206,9 +204,42 @@ const App = () => {
             <div className="about-text">
               <p className="text-ink-2 mb-5 leading-relaxed" dangerouslySetInnerHTML={{ __html: t('about_p1') }} />
               <p className="text-ink-2 mb-5 leading-relaxed" dangerouslySetInnerHTML={{ __html: t('about_p2') }} />
-              <p className="text-ink-2 leading-relaxed" dangerouslySetInnerHTML={{ __html: t('about_p3') }} />
+              <p className="text-ink-2 leading-relaxed mb-8" dangerouslySetInnerHTML={{ __html: t('about_p3') }} />
+              <TerminalCard />
             </div>
             
+            <div className="space-y-5">
+            <div className="now-card relative rounded-3xl p-[1.5px] bg-gradient-to-br from-indigo-500 via-purple-500 to-pink-500 shadow-lg shadow-indigo-500/10">
+              <div className="rounded-[calc(1.5rem-1.5px)] bg-surface-solid p-6">
+                <div className="flex items-center gap-2 font-mono text-[10px] font-bold tracking-widest text-emerald-500 uppercase mb-4">
+                  <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+                  {t('now_label')}
+                </div>
+                <div className="flex gap-4 items-start">
+                  <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-indigo-500 to-purple-500 text-white flex items-center justify-center flex-none shadow-md">
+                    <Briefcase size={20} />
+                  </div>
+                  <div>
+                    <div className="font-display font-extrabold text-lg text-ink leading-tight">{t('now_role')}</div>
+                    <div className="text-sm font-semibold text-accent">VinSmart Future</div>
+                    <div className="flex items-center gap-1 text-xs text-ink-3 mt-1">
+                      <MapPin size={12} /> {t('now_loc')}
+                    </div>
+                  </div>
+                </div>
+                <div className="grid grid-cols-2 gap-2 mt-5">
+                  <a href="https://www.quizify.vn" target="_blank" rel="noopener noreferrer" className="group flex items-center justify-between gap-2 text-xs font-bold text-ink bg-soft border border-line rounded-xl px-3 py-2.5 hover:border-accent hover:text-accent transition-all">
+                    <span className="flex items-center gap-1.5"><Globe size={12} />quizify.vn</span>
+                    <ArrowUpRight size={12} className="transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+                  </a>
+                  <a href="https://hkchinese.com" target="_blank" rel="noopener noreferrer" className="group flex items-center justify-between gap-2 text-xs font-bold text-ink bg-soft border border-line rounded-xl px-3 py-2.5 hover:border-accent hover:text-accent transition-all">
+                    <span className="flex items-center gap-1.5"><Globe size={12} />hkchinese.com</span>
+                    <ArrowUpRight size={12} className="transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+                  </a>
+                </div>
+              </div>
+            </div>
+
             <div className="focus-card glass-panel rounded-3xl p-8">
               <h3 className="font-mono text-[11px] font-bold text-ink-3 tracking-widest uppercase mb-6">
                 {t('focus_title')}
@@ -246,7 +277,7 @@ const App = () => {
 
                 <div className="focus-item flex gap-4 items-start">
                   <div className="focus-ico w-10 h-10 rounded-xl bg-accent-soft text-accent flex items-center justify-center flex-none">
-                    <GraduationCap size={18} />
+                    <Briefcase size={18} />
                   </div>
                   <div>
                     <b className="font-display font-extrabold text-sm text-ink">{t('f4_t')}</b>
@@ -255,9 +286,13 @@ const App = () => {
                 </div>
               </div>
             </div>
+            </div>
           </div>
         </div>
       </section>
+
+      {/* ================= LIVE PRODUCTS (interactive embeds) ================= */}
+      <LiveShowcase />
 
       {/* ================= SKILLS SECTION ================= */}
       <section id="skills" className="py-24 bg-soft/50 dark:bg-soft/10 border-y border-line overflow-hidden">
@@ -347,49 +382,43 @@ const App = () => {
           <div className="relative ml-4">
             <div className="absolute left-0 top-2 bottom-2 w-[2px] bg-gradient-to-b from-indigo-500 via-purple-500 to-line rounded-full" />
             
-            {/* VinUniversity */}
-            <div className="relative pl-12 pb-12 group">
-              <div className="absolute left-[-20px] top-1.5 w-10 h-10 flex items-center justify-center z-10">
-                <div className="w-4 h-4 rounded-full bg-bg border-2 border-indigo-500 group-hover:border-purple-500 group-hover:scale-125 duration-200 transition-all shadow shadow-indigo-500/20" />
+            {timeline.map((item, idx) => (
+              <div key={idx} className={`relative pl-12 group ${idx === timeline.length - 1 ? '' : 'pb-10'}`}>
+                <div className="absolute left-[-20px] top-1.5 w-10 h-10 flex items-center justify-center z-10">
+                  {item.current ? (
+                    <span className="relative flex w-4 h-4">
+                      <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-60" />
+                      <span className="relative inline-flex w-4 h-4 rounded-full bg-emerald-500 border-2 border-bg" />
+                    </span>
+                  ) : (
+                    <div className="w-4 h-4 rounded-full bg-bg border-2 border-indigo-500 group-hover:border-purple-500 group-hover:scale-125 duration-200 transition-all shadow shadow-indigo-500/20" />
+                  )}
+                </div>
+                <div className={`glass-panel rounded-2xl p-6 hover:translate-x-1 duration-300 ${item.current ? 'ring-1 ring-emerald-500/30' : ''}`}>
+                  <div className="flex items-start justify-between gap-3 flex-wrap">
+                    <div>
+                      <h3 className="font-display font-extrabold text-lg text-ink">{item.title}</h3>
+                      <div className="text-sm font-semibold text-ink-2 mt-1">{item.org}</div>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      {item.current && (
+                        <span className="font-mono text-[10px] font-bold text-emerald-500 bg-emerald-500/10 border border-emerald-500/20 px-2 py-0.5 rounded uppercase tracking-wider">
+                          {t('now_badge')}
+                        </span>
+                      )}
+                      <span className="font-mono text-[10px] text-ink-3 font-bold bg-soft px-2 py-0.5 border border-line rounded">{item.date}</span>
+                    </div>
+                  </div>
+                  {item.bullets && item.bullets.length > 0 && (
+                    <ul className="list-disc pl-4 space-y-1.5 mt-4">
+                      {item.bullets.map((b, i) => (
+                        <li key={i} className="text-xs text-ink-2 leading-relaxed">{b}</li>
+                      ))}
+                    </ul>
+                  )}
+                </div>
               </div>
-              <div className="glass-panel rounded-2xl p-6 hover:translate-x-1 duration-300">
-                <h3 className="font-display font-extrabold text-lg text-ink" data-i18n="x2_title">AI In Action</h3>
-                <div className="text-sm font-semibold text-ink-2 mt-1">VinUniversity</div>
-                <span className="font-mono text-[10px] text-ink-3 font-bold bg-soft px-2 py-0.5 border border-line rounded mt-2.5 inline-block" data-i18n="x2_date">May 2026 — Present</span>
-                <ul className="list-disc pl-4 space-y-1.5 mt-4">
-                  <li className="text-xs text-ink-2" data-i18n="x2_1">Large Language Models (LLMs), Prompt Engineering, RAG.</li>
-                  <li className="text-xs text-ink-2" data-i18n="x2_2">AI Agents and building real-world AI applications.</li>
-                </ul>
-              </div>
-            </div>
-
-            {/* Freelancer */}
-            <div className="relative pl-12 pb-12 group">
-              <div className="absolute left-[-20px] top-1.5 w-10 h-10 flex items-center justify-center z-10">
-                <div className="w-4 h-4 rounded-full bg-bg border-2 border-indigo-500 group-hover:border-purple-500 group-hover:scale-125 duration-200 transition-all shadow shadow-indigo-500/20" />
-              </div>
-              <div className="glass-panel rounded-2xl p-6 hover:translate-x-1 duration-300">
-                <h3 className="font-display font-extrabold text-lg text-ink" data-i18n="x1_title">Freelance Developer</h3>
-                <span className="font-mono text-[10px] text-ink-3 font-bold bg-soft px-2 py-0.5 border border-line rounded mt-2.5 inline-block">2022 — <span data-i18n="present3">Present</span></span>
-                <ul className="list-disc pl-4 space-y-1.5 mt-4">
-                  <li className="text-xs text-ink-2" data-i18n="x1_1">Developed web applications for various clients.</li>
-                  <li className="text-xs text-ink-2" data-i18n="x1_2">Designed, implemented, and deployed software systems.</li>
-                  <li className="text-xs text-ink-2" data-i18n="x1_3">Worked directly with clients to analyze requirements and deliver solutions.</li>
-                </ul>
-              </div>
-            </div>
-
-            {/* University */}
-            <div className="relative pl-12 group">
-              <div className="absolute left-[-20px] top-1.5 w-10 h-10 flex items-center justify-center z-10">
-                <div className="w-4 h-4 rounded-full bg-bg border-2 border-indigo-500 group-hover:border-purple-500 group-hover:scale-125 duration-200 transition-all shadow shadow-indigo-500/20" />
-              </div>
-              <div className="glass-panel rounded-2xl p-6 hover:translate-x-1 duration-300">
-                <h3 className="font-display font-extrabold text-lg text-ink" data-i18n="x3_title">Bachelor of Information Technology</h3>
-                <div className="text-sm font-semibold text-ink-2 mt-1" data-i18n="x3_org">University of Technology and Education — The University of Danang</div>
-                <span className="font-mono text-[10px] text-ink-3 font-bold bg-soft px-2 py-0.5 border border-line rounded mt-2.5 inline-block">2020 — 2025</span>
-              </div>
-            </div>
+            ))}
           </div>
         </div>
       </section>
@@ -412,11 +441,11 @@ const App = () => {
       <section id="contact" className="py-24">
         <div className="wrap reveal">
           <div className="contact-box glass-panel rounded-3xl text-center py-16 px-8 relative overflow-hidden">
-            <h2 className="text-slate-900 dark:text-white font-display font-extrabold text-3xl md:text-4xl mb-4" data-i18n="c_title">
-              Let's build something together
+            <h2 className="text-slate-900 dark:text-white font-display font-extrabold text-3xl md:text-4xl mb-4">
+              {t('c_title')}
             </h2>
-            <p className="text-ink-2 text-sm leading-relaxed max-w-[500px] mx-auto mb-8 font-semibold" data-i18n="c_desc">
-              I'm open to AI engineering opportunities, collaborations, and interesting projects. Reach out anytime.
+            <p className="text-ink-2 text-sm leading-relaxed max-w-[520px] mx-auto mb-8 font-semibold">
+              {t('c_desc')}
             </p>
             <div className="contact-links flex flex-wrap gap-4 justify-center">
               <a className="btn btn-primary text-white bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 flex items-center gap-2 hover:scale-105 shadow-md shadow-indigo-500/20 duration-200" href="mailto:tuananhhk458@gmail.com">
@@ -439,12 +468,14 @@ const App = () => {
       {/* ================= FOOTER ================= */}
       <footer className="py-10 border-t border-line bg-surface-solid/50 dark:bg-surface-solid/20">
         <div className="wrap flex justify-between gap-4 flex-wrap items-center">
-          <span className="font-mono text-xs text-ink-3" data-i18n="footer">
-            © 2026 Hoang Kim Tuan Anh
+          <span className="font-mono text-xs text-ink-3">
+            {t('footer')}
           </span>
-          <a href="https://github.com/Tuananh458" target="_blank" rel="noopener noreferrer" className="font-mono text-xs text-ink-3 hover:text-accent transition-colors">
-            github.com/Tuananh458
-          </a>
+          <div className="flex gap-5 flex-wrap">
+            <a href="https://www.quizify.vn" target="_blank" rel="noopener noreferrer" className="font-mono text-xs text-ink-3 hover:text-accent transition-colors">quizify.vn</a>
+            <a href="https://hkchinese.com" target="_blank" rel="noopener noreferrer" className="font-mono text-xs text-ink-3 hover:text-accent transition-colors">hkchinese.com</a>
+            <a href="https://github.com/Tuananh458" target="_blank" rel="noopener noreferrer" className="font-mono text-xs text-ink-3 hover:text-accent transition-colors">github.com/Tuananh458</a>
+          </div>
         </div>
       </footer>
 

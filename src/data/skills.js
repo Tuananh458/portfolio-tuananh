@@ -13,7 +13,9 @@ export const skillsData = [
       { name: 'RAG', level: { en: 'Advanced', vi: 'Nâng cao' } },
       { name: 'OCR', level: { en: 'Advanced', vi: 'Nâng cao' } },
       { name: 'AI Workflow', level: { en: 'Advanced', vi: 'Nâng cao' } },
-      { name: 'AI Agents', level: { en: 'Advanced', vi: 'Nâng cao' } }
+      { name: 'AI Agents', level: { en: 'Advanced', vi: 'Nâng cao' } },
+      { name: 'LangGraph', level: { en: 'Advanced', vi: 'Nâng cao' } },
+      { name: 'Speech AI', level: { en: 'Intermediate', vi: 'Trung cấp' } }
     ]
   },
   {
@@ -40,7 +42,8 @@ export const skillsData = [
     icon: 'Layers',
     items: [
       { name: 'ReactJS', level: { en: 'Advanced', vi: 'Nâng cao' } },
-      { name: 'NextJS', level: { en: 'Advanced', vi: 'Nâng cao' } }
+      { name: 'NextJS', level: { en: 'Advanced', vi: 'Nâng cao' } },
+      { name: 'TailwindCSS', level: { en: 'Advanced', vi: 'Nâng cao' } }
     ]
   },
   {
@@ -53,6 +56,7 @@ export const skillsData = [
     icon: 'Database',
     items: [
       { name: 'PostgreSQL', level: { en: 'Advanced', vi: 'Nâng cao' } },
+      { name: 'pgvector', level: { en: 'Advanced', vi: 'Nâng cao' } },
       { name: 'SQL Server', level: { en: 'Advanced', vi: 'Nâng cao' } },
       { name: 'Supabase', level: { en: 'Advanced', vi: 'Nâng cao' } }
     ]

@@ -1,7 +1,8 @@
 import React, { useEffect } from 'react';
 import { useLanguage } from '../context/LanguageContext';
 import { cvData } from '../data/cvData';
-import { X, Printer, Phone, Mail, Github, Compass } from 'lucide-react';
+import { Avatar } from './Avatar';
+import { X, Printer, Phone, Mail, Github, MapPin, Globe } from 'lucide-react';
 
 const CVModal = ({ isOpen, onClose }) => {
   const { lang, t } = useLanguage();
@@ -55,6 +56,8 @@ const CVModal = ({ isOpen, onClose }) => {
 
         {/* CV Header */}
         <div className="flex justify-between gap-6 flex-wrap border-b-2 border-slate-900 pb-5 mb-6">
+          <div className="flex items-center gap-5">
+          <Avatar className="w-20 h-24 rounded-xl border border-slate-200 flex-none" imgClassName="object-[50%_18%]" fallbackClassName="text-xl" />
           <div>
             <h2 className="font-display font-extrabold text-3xl md:text-4xl tracking-tight leading-none text-slate-900">
               {cvData.name[lang] || cvData.name.en}
@@ -62,6 +65,7 @@ const CVModal = ({ isOpen, onClose }) => {
             <div className="font-mono text-xs font-bold text-indigo-600 tracking-wider uppercase mt-2">
               {role}
             </div>
+          </div>
           </div>
           <div className="text-right text-xs text-slate-500 leading-relaxed min-w-[200px] md:min-w-0">
             <span className="flex items-center justify-end gap-1.5 mb-1">
@@ -72,9 +76,22 @@ const CVModal = ({ isOpen, onClose }) => {
               <Mail size={11} className="text-slate-400" />
               <a href={`mailto:${cvData.contact.email}`} className="hover:text-indigo-600">{cvData.contact.email}</a>
             </span>
-            <span className="flex items-center justify-end gap-1.5">
+            <span className="flex items-center justify-end gap-1.5 mb-1">
               <Github size={11} className="text-slate-400" />
               <a href={cvData.contact.githubUrl} target="_blank" rel="noopener noreferrer" className="hover:text-indigo-600">{cvData.contact.github}</a>
+            </span>
+            <span className="flex items-center justify-end gap-1.5 mb-1">
+              <Globe size={11} className="text-slate-400" />
+              {cvData.contact.websites.map((w, i) => (
+                <React.Fragment key={w.url}>
+                  {i > 0 && <span className="text-slate-300">·</span>}
+                  <a href={w.url} target="_blank" rel="noopener noreferrer" className="hover:text-indigo-600">{w.label}</a>
+                </React.Fragment>
+              ))}
+            </span>
+            <span className="flex items-center justify-end gap-1.5">
+              <MapPin size={11} className="text-slate-400" />
+              <span>{cvData.contact.location[lang] || cvData.contact.location.en}</span>
             </span>
           </div>
         </div>
@@ -90,19 +107,36 @@ const CVModal = ({ isOpen, onClose }) => {
           </p>
         </div>
 
-        {/* Section: Skills */}
+        {/* Section: Experience */}
         <div className="mb-6">
           <h3 className="font-mono text-[11px] font-bold text-indigo-600 tracking-widest uppercase mb-3 flex items-center gap-2">
-            <span>{t('cv_s_skills')}</span>
+            <span>{t('cv_s_exp')}</span>
             <span className="flex-1 h-[1px] bg-slate-200" />
           </h3>
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 text-xs text-slate-700">
-            {cvData.skillGroups.map((group, idx) => {
-              const name = typeof group.name === 'object' ? group.name[lang] || group.name.en : group.name;
+          <div className="space-y-3">
+            {cvData.experience.map((exp, idx) => {
+              const expTitle = exp.title[lang] || exp.title.en;
+              const expCompany = exp.company[lang] || exp.company.en;
+              const expDate = exp.date[lang] || exp.date.en;
+              const expBullets = exp.bullets[lang] || exp.bullets.en;
+
               return (
                 <div key={idx}>
-                  <b className="block text-slate-900 font-mono text-[10px] tracking-wider uppercase mb-1">{name}</b>
-                  <span>{group.skills.join(' · ')}</span>
+                  <div className="flex justify-between items-baseline gap-2 flex-wrap mb-1">
+                    <h4 className="text-xs font-bold text-slate-900">
+                      {expTitle}
+                      {exp.current && <span className="ml-2 align-middle font-mono text-[9px] font-bold text-emerald-600 bg-emerald-50 border border-emerald-200 px-1.5 py-0.5 rounded uppercase">{t('now_badge')}</span>}
+                    </h4>
+                    <span className="font-mono text-[10px] text-slate-400">{expDate}</span>
+                  </div>
+                  <div className="text-[11px] text-indigo-600 font-semibold mb-2">{expCompany}</div>
+                  <ul className="list-disc pl-4 space-y-1">
+                    {expBullets.map((bullet, bulletIdx) => (
+                      <li key={bulletIdx} className="text-xs text-slate-700 leading-relaxed pl-0.5">
+                        {bullet}
+                      </li>
+                    ))}
+                  </ul>
                 </div>
               );
             })}
@@ -147,35 +181,19 @@ const CVModal = ({ isOpen, onClose }) => {
           </div>
         </div>
 
-        {/* Section: Experience */}
+        {/* Section: Skills */}
         <div className="mb-6">
           <h3 className="font-mono text-[11px] font-bold text-indigo-600 tracking-widest uppercase mb-3 flex items-center gap-2">
-            <span>{t('cv_s_exp')}</span>
+            <span>{t('cv_s_skills')}</span>
             <span className="flex-1 h-[1px] bg-slate-200" />
           </h3>
-          <div className="space-y-3">
-            {cvData.experience.map((exp, idx) => {
-              const expTitle = exp.title[lang] || exp.title.en;
-              const expCompany = exp.company[lang] || exp.company.en;
-              const expDate = exp.date[lang] || exp.date.en;
-              const expBullets = exp.bullets[lang] || exp.bullets.en;
-
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 text-xs text-slate-700">
+            {cvData.skillGroups.map((group, idx) => {
+              const name = typeof group.name === 'object' ? group.name[lang] || group.name.en : group.name;
               return (
                 <div key={idx}>
-                  <div className="flex justify-between items-baseline gap-2 flex-wrap mb-1">
-                    <h4 className="text-xs font-bold text-slate-900">
-                      {expTitle}
-                    </h4>
-                    <span className="font-mono text-[10px] text-slate-400">{expDate}</span>
-                  </div>
-                  <div className="text-[11px] text-slate-500 italic mb-2">{expCompany}</div>
-                  <ul className="list-disc pl-4 space-y-1">
-                    {expBullets.map((bullet, bulletIdx) => (
-                      <li key={bulletIdx} className="text-xs text-slate-700 leading-relaxed pl-0.5">
-                        {bullet}
-                      </li>
-                    ))}
-                  </ul>
+                  <b className="block text-slate-900 font-mono text-[10px] tracking-wider uppercase mb-1">{name}</b>
+                  <span>{group.skills.join(' · ')}</span>
                 </div>
               );
             })}

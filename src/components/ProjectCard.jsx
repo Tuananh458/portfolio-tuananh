@@ -1,11 +1,10 @@
-import React, { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import React from 'react';
+import { motion } from 'framer-motion';
 import { useLanguage } from '../context/LanguageContext';
-import { ArrowUpRight, Play, ExternalLink } from 'lucide-react';
+import { Play, ExternalLink } from 'lucide-react';
 
 const ProjectCard = ({ project }) => {
   const { lang, t } = useLanguage();
-  const [embedOpen, setEmbedOpen] = useState(false);
 
   const title = project.title[lang] || project.title.en;
   const role = project.role[lang] || project.role.en;
@@ -89,65 +88,20 @@ const ProjectCard = ({ project }) => {
           </a>
         )}
         
-        <button 
-          onClick={() => setEmbedOpen(!embedOpen)}
-          className={`embed-toggle flex items-center gap-1.5 text-xs font-bold text-ink-2 bg-soft border border-line rounded-full px-4 py-2 hover:text-accent hover:border-accent hover:bg-accent-soft transition-all duration-200 ${
-            embedOpen ? 'open text-accent border-accent bg-accent-soft' : ''
-          }`}
-        >
-          <Play size={10} className={`transform transition-transform duration-200 ${embedOpen ? 'rotate-90 text-accent' : ''}`} fill="currentColor" />
-          <span>{t('embed_btn')}</span>
-        </button>
-      </div>
-
-      {/* Embedded Iframe Container */}
-      <AnimatePresence>
-        {embedOpen && (
-          <motion.div 
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: 'auto' }}
-            exit={{ opacity: 0, height: 0 }}
-            transition={{ duration: 0.35, ease: 'easeInOut' }}
-            className="overflow-hidden mt-6 rounded-2xl border border-line-2 shadow-md-custom"
+        {project.live ? (
+          <button
+            onClick={() => window.dispatchEvent(new CustomEvent('open-live-demo', { detail: project.id }))}
+            className="flex items-center gap-1.5 text-xs font-bold text-white bg-gradient-to-r from-indigo-500 to-purple-500 rounded-full px-4 py-2 hover:brightness-110 hover:scale-105 transition-all duration-200 shadow-md shadow-indigo-500/20"
           >
-            {project.embedUrl ? (
-              <div className="bg-bg">
-                {/* Browser Frame Header */}
-                <div className="flex items-center gap-2 px-4 py-2.5 border-b border-line bg-surface-solid">
-                  <div className="flex gap-1.5">
-                    <i className="w-2.5 h-2.5 rounded-full bg-[#ef4444]" />
-                    <i className="w-2.5 h-2.5 rounded-full bg-[#f59e0b]" />
-                    <i className="w-2.5 h-2.5 rounded-full bg-[#10b981]" />
-                  </div>
-                  <span className="font-mono text-[10.5px] text-ink-3 flex-1 text-center bg-bg border border-line rounded px-3 py-0.5 mx-4 overflow-hidden text-ellipsis whitespace-nowrap">
-                    {project.embedUrl}
-                  </span>
-                  <a 
-                    href={project.embedUrl} 
-                    target="_blank" 
-                    rel="noopener noreferrer"
-                    className="text-xs font-bold text-accent flex items-center gap-1"
-                  >
-                    <span>{t('embed_open').replace(' ↗', '')}</span>
-                    <ArrowUpRight size={12} />
-                  </a>
-                </div>
-                {/* Iframe */}
-                <iframe 
-                  src={project.embedUrl} 
-                  className="w-full h-[520px] border-none bg-white block" 
-                  title={`${title} live demo`}
-                  loading="lazy"
-                />
-              </div>
-            ) : (
-              <div className="bg-surface-solid p-12 text-center text-ink-3 text-sm">
-                {t('embed_soon')}
-              </div>
-            )}
-          </motion.div>
+            <Play size={10} fill="currentColor" />
+            <span>{t('embed_btn')}</span>
+          </button>
+        ) : (
+          <span className="text-xs font-semibold text-ink-3 bg-soft border border-line rounded-full px-4 py-2">
+            {t('embed_soon')}
+          </span>
         )}
-      </AnimatePresence>
+      </div>
     </motion.div>
   );
 };

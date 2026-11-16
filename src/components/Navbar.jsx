@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useTheme } from '../context/ThemeContext';
 import { useLanguage } from '../context/LanguageContext';
 import { Menu, X, Sun, Moon, ArrowUpRight } from 'lucide-react';
+import { Avatar } from './Avatar';
 
 const Navbar = ({ onOpenCV }) => {
   const { theme, toggleTheme } = useTheme();
@@ -23,6 +24,7 @@ const Navbar = ({ onOpenCV }) => {
 
   const navLinks = [
     { href: '#about', label: t('nav_about') },
+    { href: '#live', label: t('nav_live') },
     { href: '#skills', label: t('nav_skills') },
     { href: '#projects', label: t('nav_projects') },
     { href: '#experience', label: t('nav_exp') },
@@ -36,12 +38,12 @@ const Navbar = ({ onOpenCV }) => {
         scrolled ? 'transform translate-y-1' : 'transform translate-y-0'
       }`}
     >
-      <div className="max-w-[1040px] mx-auto px-4">
+      <div className="max-w-[1180px] mx-auto px-4">
         <div className="glass-panel rounded-full px-6 py-3 flex items-center justify-between gap-4">
           {/* Logo */}
           <a href="#top" className="flex items-center gap-2 text-ink font-display font-extrabold text-base tracking-tight decoration-none">
-            <span className="w-8 h-8 rounded-full bg-gradient-to-br from-indigo-500 via-purple-500 to-pink-500 text-white flex items-center justify-center text-xs font-black shadow-md">
-              TA
+            <span className="w-9 h-9 rounded-full p-[2px] bg-gradient-to-br from-indigo-500 via-purple-500 to-pink-500 shadow-md flex-none">
+              <Avatar className="w-full h-full rounded-full bg-white" imgClassName="object-[50%_18%]" fallbackClassName="text-[10px]" />
             </span>
             <span className="whitespace-nowrap">
               {lang === 'vi' ? (
@@ -57,12 +59,12 @@ const Navbar = ({ onOpenCV }) => {
           </a>
 
           {/* Desktop Nav Links */}
-          <div className="hidden md:flex items-center gap-6">
+          <div className="hidden xl:flex items-center gap-4">
             {navLinks.map((link) => (
               <a 
                 key={link.href}
                 href={link.href}
-                className="text-ink-2 hover:text-ink text-sm font-semibold transition-colors duration-200 relative group py-1"
+                className="text-ink-2 hover:text-ink text-[13.5px] font-semibold whitespace-nowrap transition-colors duration-200 relative group py-1"
               >
                 {link.label}
                 <span className="absolute bottom-0 left-0 w-full h-[2px] bg-gradient-to-r from-indigo-500 to-purple-500 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left" />
@@ -111,7 +113,7 @@ const Navbar = ({ onOpenCV }) => {
             {/* Mobile Nav Button */}
             <button 
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="md:hidden text-ink hover:opacity-85 focus:outline-none"
+              className="xl:hidden text-ink hover:opacity-85 focus:outline-none"
             >
               {mobileMenuOpen ? <X size={20} /> : <Menu size={20} />}
             </button>
@@ -120,7 +122,7 @@ const Navbar = ({ onOpenCV }) => {
 
         {/* Mobile Dropdown Panel */}
         {mobileMenuOpen && (
-          <div className="md:hidden mt-2 p-4 rounded-2xl glass-panel bg-surface-solid border border-line-2 flex flex-col gap-3 shadow-lg-custom animate-slideDown">
+          <div className="xl:hidden mt-2 p-4 rounded-2xl glass-panel bg-surface-solid border border-line-2 flex flex-col gap-3 shadow-lg-custom animate-slideDown">
             {navLinks.map((link) => (
               <a 
                 key={link.href}
